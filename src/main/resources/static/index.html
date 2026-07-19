@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreOwnedSales — Lüks İkinci El</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark py-3 sticky-top">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand brand-logo" href="#">
+            PreOwned<span class="gold-text">Sales</span>
+        </a>
+        <div class="d-none d-md-flex flex-grow-1 mx-4">
+            <div class="input-group luxury-search">
+                <input class="form-control" type="search" id="aramaInput"
+                    placeholder="Marka, ürün veya materyal arayın..." aria-label="Ara" onkeyup="aramaYap()">
+                <button class="btn btn-gold" type="button" onclick="aramaYap()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn-mobil-arama d-flex d-md-none" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#mobilAramaPanel"
+                    aria-expanded="false" aria-controls="mobilAramaPanel" title="Ara">
+                <i class="bi bi-search fs-5"></i>
+            </button>
+            <a href="javascript:void(0)" class="cart-icon text-white position-relative" onclick="sepetModalAc(); return false;" title="Sepetim">
+    <i class="bi bi-bag fs-4"></i>
+    <span class="cart-badge" id="sepetSayi">0</span>
+</a>
+            <div id="navGirisAlani" class="d-none d-md-block"></div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobil Arama Paneli -->
+<div class="collapse" id="mobilAramaPanel">
+    <div class="mobil-arama-panel">
+        <div class="container-fluid px-4">
+            <div class="input-group luxury-search">
+                <input class="form-control" type="search" id="mobilAramaInput"
+                    placeholder="Marka, ürün veya materyal arayın..." aria-label="Mobil Ara"
+                    oninput="document.getElementById('aramaInput').value=this.value; aramaYap();">
+                <button class="btn btn-gold" type="button"
+                    onclick="document.getElementById('aramaInput').value=document.getElementById('mobilAramaInput').value; aramaYap();">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- HERO BANNER -->
+<div class="luxury-hero">
+    <div class="container text-center py-5">
+        <p class="hero-subtitle">Authenticated Luxury Resale</p>
+        <h1 class="hero-title">Lüksü Sürdürülebilir Kılıyoruz</h1>
+        <p class="hero-desc">Her parça uzman ekspertiz sürecinden geçer. Gerçekliği onaylı, geçmişi bilinçli.</p>
+    </div>
+</div>
+
+
+<!-- ANA İÇERİK -->
+<div class="container mt-5 mb-5">
+    <div class="row g-4">
+
+       
+        <div class="col-md-3">
+            <div class="filter-card p-4">
+                <h6 class="filter-title mb-4">
+                    <i class="bi bi-funnel-fill me-2 gold-text"></i>Filtreler
+                </h6>
+
+                
+                <div class="filter-group mb-4">
+                    <label class="filter-label" for="marka">Marka</label>
+                    <select class="form-select luxury-select mt-2" id="marka" onchange="filtrele()">
+                        <option value="">Tüm Markalar</option>
+                        <option value="Louis Vuitton">Louis Vuitton</option>
+                        <option value="Gucci">Gucci</option>
+                        <option value="Hermes">Hermès</option>
+                        <option value="Chanel">Chanel</option>
+                    </select>
+                </div>
+
+                
+                <div class="filter-group mb-4">
+                    <label class="filter-label">Ürün Türü</label>
+                    <div class="mt-2">
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kat_canta" value="Çanta" onchange="filtrele()">
+                            <label class="form-check-label" for="kat_canta">Çanta</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kat_ayakkabi" value="Ayakkabı" onchange="filtrele()">
+                            <label class="form-check-label" for="kat_ayakkabi">Ayakkabı</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kat_disgiyim" value="Dış Giyim" onchange="filtrele()">
+                            <label class="form-check-label" for="kat_disgiyim">Dış Giyim</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kat_aksesuar" value="Aksesuar" onchange="filtrele()">
+                            <label class="form-check-label" for="kat_aksesuar">Aksesuar</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kat_esarp" value="Eşarp" onchange="filtrele()">
+                            <label class="form-check-label" for="kat_esarp">Eşarp</label>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="filter-group mb-4">
+                    <label class="filter-label">Materyal</label>
+                    <div class="mt-2">
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="mat_deri" value="Deri" onchange="filtrele()">
+                            <label class="form-check-label" for="mat_deri">Deri</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="mat_ipek" value="İpek" onchange="filtrele()">
+                            <label class="form-check-label" for="mat_ipek">İpek</label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="mat_kumas" value="Kumaş" onchange="filtrele()">
+                            <label class="form-check-label" for="mat_kumas">Kumaş</label>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="filter-group mb-4">
+                    <label class="filter-label">Kondisyon</label>
+                    <div class="mt-2">
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kon_etiketli" value="Etiketli" onchange="filtrele()">
+                            <label class="form-check-label" for="kon_etiketli">
+                                <span class="condition-badge badge-new">Etiketli/Yeni Gibi</span>
+                            </label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kon_az" value="Az Kullanılmış" onchange="filtrele()">
+                            <label class="form-check-label" for="kon_az">
+                                <span class="condition-badge badge-used">Az Kullanılmış</span>
+                            </label>
+                        </div>
+                        <div class="form-check luxury-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="kon_vintage" value="Vintage" onchange="filtrele()">
+                            <label class="form-check-label" for="kon_vintage">
+                                <span class="condition-badge badge-vintage">Vintage</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAKSİMUM FİYAT SÜRGÜSÜ -->
+                <div class="filter-group mb-4">
+                    <label class="filter-label">Maks. Fiyat</label>
+                    <input type="range" class="form-range luxury-range mt-2" id="maxFiyat"
+                        min="5000" max="250000" step="5000" value="250000"
+                        oninput="document.getElementById('fiyatGoster').innerText = parseInt(this.value).toLocaleString('tr-TR') + ' ₺';">
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">5.000 ₺</small>
+                        <small class="gold-text fw-bold" id="fiyatGoster">250.000 ₺</small>
+                    </div>
+                </div>
+
+                <!-- FİLTRELERİ SIFIRLA -->
+                <button class="btn btn-outline-gold w-100 btn-sm mt-1" onclick="filtreleriSifirla()">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>Sıfırla
+                </button>
+            </div>
+        </div>
+        
+
+
+        <!-- SAĞ ALAN — Ürün Grid -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="text-muted mb-0 small" id="urunSayisi">Yükleniyor...</p>
+                <select class="form-select form-select-sm luxury-select" style="width:auto;"
+                    id="siralama" onchange="filtrele()">
+                    <option value="default">Önerilen Sıralama</option>
+                    <option value="fiyat_artan">Fiyat: Düşükten Yükseğe</option>
+                    <option value="fiyat_azalan">Fiyat: Yüksekten Düşüğe</option>
+                    <option value="skor">Ekspertiz Skoru</option>
+                </select>
+            </div>
+            <div class="row g-4" id="liste"></div>
+            <div id="sonucYok" class="text-center py-5 d-none">
+                <i class="bi bi-search fs-1 text-muted d-block mb-3"></i>
+                <p class="text-muted">Seçili filtrelere uygun ürün bulunamadı.</p>
+                <button class="btn btn-gold mt-2" onclick="filtreleriSifirla()">Tüm Ürünleri Göster</button>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<section class="kurator-bolum py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <p class="kurator-ust-etiket">
+                <i class="bi bi-stars me-2"></i>PreOwnedSales Güvencesi
+            </p>
+            <h2 class="kurator-baslik">Küratörümüz &amp; Orijinallik Garantisi</h2>
+            <div class="kurator-cizgi mx-auto"></div>
+            <p class="kurator-aciklama mx-auto mt-4">
+                Her ürün, koleksiyonumuza girmeden önce titiz bir uzman değerlendirme sürecinden geçer.
+                Yıllarca lüks moda dünyasında deneyim kazanmış küratör ekibimiz; yalnızca
+                otantikliği belgeli, nadir ve estetik değeri kanıtlanmış seçkin parçaları sizinle buluşturur.
+            </p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-3 col-md-6">
+                <div class="kurator-kart">
+                    <div class="kurator-ikon-cerceve"><i class="bi bi-patch-check-fill"></i></div>
+                    <h5 class="kurator-kart-baslik">Uzman Ekspertiz</h5>
+                    <p class="kurator-kart-metin">Her ürün, lüks moda ekosisteminde 10+ yıl deneyime sahip bağımsız eksperlerimiz tarafından fiziksel olarak incelenir. Dikiş kalitesi, donanım, logo baskısı ve materyal analizleri detaylı raporlanır.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="kurator-kart">
+                    <div class="kurator-ikon-cerceve"><i class="bi bi-shield-check"></i></div>
+                    <h5 class="kurator-kart-baslik">Dijital Sertifika</h5>
+                    <p class="kurator-kart-metin">Her satın alıma kriptografik imzalı dijital orijinallik sertifikası eşlik eder. QR kod ile anlık doğrulama imkânı sunan bu sertifika, ürünün özgünlüğünü kalıcı olarak belgeler.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="kurator-kart">
+                    <div class="kurator-ikon-cerceve"><i class="bi bi-arrow-return-left"></i></div>
+                    <h5 class="kurator-kart-baslik">Kolay İade</h5>
+                    <p class="kurator-kart-metin">Teslim tarihinden itibaren 14 gün içinde koşulsuz iade hakkı. Ürünün orijinal ambalajında iade edilmesi yeterlidir; nakliye bedeli tarafımızca karşılanır.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="kurator-kart">
+                    <div class="kurator-ikon-cerceve"><i class="bi bi-lock"></i></div>
+                    <h5 class="kurator-kart-baslik">Güvenli Ödeme</h5>
+                    <p class="kurator-kart-metin">256-bit SSL şifreleme ve PCI DSS Level 1 uyumlu altyapımız ile ödeme bilgileriniz tam güvence altındadır. Kartlı ödemede 3D Secure zorunludur.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="luxury-footer py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5 class="brand-logo mb-3">PreOwned<span class="gold-text">Sales</span></h5>
+                <p class="footer-aciklama small" style="line-height:1.8;">
+                    Lüksü sürdürülebilir kılıyoruz. Her ürün uzman ekspertiz sürecinden geçer ve orijinallik sertifikasıyla teslim edilir.
+                </p>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="footer-heading">Keşfet</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('kategori', 'Çanta'); return false;">Çantalar</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('kategori', 'Eşarp'); return false;">Eşarplar</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('kategori', 'Ayakkabı'); return false;">Ayakkabılar</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('kategori', 'Aksesuar'); return false;">Aksesuarlar</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="footer-heading">Markalar</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('marka', 'Louis Vuitton'); return false;">Louis Vuitton</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('marka', 'Gucci'); return false;">Gucci</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('marka', 'Hermes'); return false;">Hermès</a></li>
+                    <li><a href="#" class="footer-link" onclick="footerFiltrele('marka', 'Chanel'); return false;">Chanel</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h6 class="footer-heading">Güvencemiz</h6>
+                <div class="d-flex gap-4 mt-3">
+                    <div class="trust-badge text-center">
+                        <i class="bi bi-patch-check gold-text d-block mb-1" style="font-size:1.6rem;"></i>
+                        <small>Orijinallik<br>Garantisi</small>
+                    </div>
+                    <div class="trust-badge text-center">
+                        <i class="bi bi-shield-check gold-text d-block mb-1" style="font-size:1.6rem;"></i>
+                        <small>Güvenli<br>Ödeme</small>
+                    </div>
+                    <div class="trust-badge text-center">
+                        <i class="bi bi-arrow-return-left gold-text d-block mb-1" style="font-size:1.6rem;"></i>
+                        <small>Kolay<br>İade</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-alt-bant">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#" class="footer-alt-link" data-bs-toggle="modal" data-bs-target="#kosullarModal">Kullanım Koşulları</a>
+                    <a href="#" class="footer-alt-link" data-bs-toggle="modal" data-bs-target="#gizlilikModal">Gizlilik Politikası</a>
+                    <a href="#" class="footer-alt-link" onclick="kvkkModalAc(); return false;">KVKK Aydınlatma Metni</a>
+                    <a href="#" class="footer-alt-link" onclick="cerezModalAc(); return false;">Çerez Politikası</a>
+                </div>
+                <p class="footer-telif mb-0">© 2026 PreOwnedSales. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!--ÜRÜN DETAY MODALI -->
+<div class="modal fade" id="urunModal" tabindex="-1" aria-labelledby="urunModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title" id="modalUrunAdi">Ürün Adı</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-4">
+                    <div class="col-md-5">
+                        
+                        <div id="galeriWrapper" class="galeri-wrapper-relative">
+                            <div id="modalGorsel">
+                              
+                            </div>
+                            
+                            <button class="galeri-carousel-ok galeri-ok-sol"
+                                aria-label="Önceki fotoğraf"
+                                onclick="(function(){
+                                    var ts=document.querySelectorAll('#urunModal .galeri-thumb');
+                                    if(!ts.length) return;
+                                    var ai=[].findIndex.call(ts,function(t){return t.classList.contains('aktif');});
+                                    var pi=(ai-1+ts.length)%ts.length;
+                                    var ana=document.querySelector('#urunModal .modal-galeri-ana');
+                                    ts.forEach(function(t){t.classList.remove('aktif');});
+                                    ts[pi].classList.add('aktif');
+                                    if(ana) ana.src=ts[pi].src;
+                                })()">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            
+                            <button class="galeri-carousel-ok galeri-ok-sag"
+                                aria-label="Sonraki fotoğraf"
+                                onclick="(function(){
+                                    var ts=document.querySelectorAll('#urunModal .galeri-thumb');
+                                    if(!ts.length) return;
+                                    var ai=[].findIndex.call(ts,function(t){return t.classList.contains('aktif');});
+                                    var ni=(ai+1)%ts.length;
+                                    var ana=document.querySelector('#urunModal .modal-galeri-ana');
+                                    ts.forEach(function(t){t.classList.remove('aktif');});
+                                    ts[ni].classList.add('aktif');
+                                    if(ana) ana.src=ts[ni].src;
+                                })()">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                       
+                        <div id="urunOzellikler" class="mt-3"></div>
+                        <div id="modalFiyat" class="mt-3"></div>
+                        <button class="btn btn-gold w-100 mt-3 py-2" onclick="sepeteEkle()">
+                            <i class="bi bi-bag-plus me-2"></i>Sepete Ekle
+                        </button>
+                        <button class="btn btn-favori-modal w-100 mt-2" id="modalFavoriBtn" onclick="modalFavoriToggle()">
+                            <i class="bi bi-heart me-2" id="modalFavoriIkon"></i><span id="modalFavoriYazi">Favorilere Ekle</span>
+                        </button>
+                    </div>
+                    <div class="col-md-7">
+                        <div id="modalEkspertiz"></div>
+                        <div class="mt-4">
+                            <h6 class="section-title mb-3">
+                                <i class="bi bi-chat-quote me-2 gold-text"></i>Kullanıcı Yorumları
+                            </h6>
+                            <div id="modalYorumlar"></div>
+                        </div>
+                        
+                        <div class="yorum-form-box mt-4 p-3" id="yorumFormKutu">
+                            <h6 class="section-title mb-3">
+                                <i class="bi bi-pencil-square me-1 gold-text"></i>Yorum Yaz
+                            </h6>
+                            <div id="yorumLoginUyari" style="display:none;" class="yorum-uyari-kutu">
+                                <i class="bi bi-lock me-2 gold-text"></i>
+                                Yorum yapabilmek için lütfen <a href="#" class="gold-text fw-bold text-decoration-none"
+                                   data-bs-toggle="modal" data-bs-target="#authModal"
+                                   onclick="var m=bootstrap.Modal.getInstance(document.getElementById('urunModal')); if(m)m.hide();">giriş yapın</a>.
+                            </div>
+                            <div id="yorumVerifiedUyari" style="display:none;" class="yorum-uyari-kutu yorum-uyari-locked">
+                                <i class="bi bi-patch-check me-2 gold-text"></i>
+                                Bu ürüne yalnızca <strong>Doğrulanmış Alıcılar (Verified Buyer)</strong> yorum bırakabilir.
+                            </div>
+                            <div id="yorumFormAlani">
+                                <div class="mb-2">
+                                    <input type="text" class="form-control form-control-sm luxury-input" id="yorumKullanici" placeholder="Kullanıcı adınız">
+                                </div>
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm luxury-select" id="yorumPuan">
+                                        <option value="5">⭐⭐⭐⭐⭐ — Mükemmel</option>
+                                        <option value="4">⭐⭐⭐⭐ — Çok İyi</option>
+                                        <option value="3">⭐⭐⭐ — İyi</option>
+                                        <option value="2">⭐⭐ — Orta</option>
+                                        <option value="1">⭐ — Kötü</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control form-control-sm luxury-input" id="yorumMetin" rows="3" placeholder="Deneyiminizi paylaşın..."></textarea>
+                                </div>
+                                <button class="btn btn-gold btn-sm w-100" id="yorumGonderBtn" onclick="yorumEkle(0)">
+                                    <i class="bi bi-send me-1"></i>Yorum Gönder
+                                </button>
+                            </div>
+                        </div>
+                        <div id="benzerUrunlerBolum" class="mt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- SEPET MODALI -->
+<div class="modal fade" id="sepetModal" tabindex="-1" aria-labelledby="sepetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-bag me-2 gold-text"></i>Sepetim
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4" id="sepetIcerik"></div>
+            <div class="modal-footer luxury-modal-footer" id="sepetFooter"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- CHECKOUT MODALI — 2 SÜTUNLU GENİŞLETİLMİŞ ÖDEME AKIŞI -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-credit-card me-2 gold-text"></i>Güvenli Ödeme
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-0">
+               
+                <div class="checkout-adim-gosterge">
+                    <div class="checkout-step-item aktif" data-adim="1">
+                        <div class="checkout-step-daire">1</div>
+                        <span class="checkout-step-etiket">Teslimat</span>
+                    </div>
+                    <div class="checkout-step-cizgi"></div>
+                    <div class="checkout-step-item" data-adim="2">
+                        <div class="checkout-step-daire">2</div>
+                        <span class="checkout-step-etiket">Ödeme</span>
+                    </div>
+                    <div class="checkout-step-cizgi"></div>
+                    <div class="checkout-step-item" data-adim="3">
+                        <div class="checkout-step-daire">3</div>
+                        <span class="checkout-step-etiket">Onay</span>
+                    </div>
+                </div>
+
+                
+                <div class="checkout-iki-sutun">
+
+                   
+                    <div class="checkout-sol-sutun">
+
+                       
+                        <div id="checkoutAdim1" class="checkout-panel p-4">
+                            <h6 class="checkout-panel-baslik">
+                                <i class="bi bi-geo-alt me-2 gold-text"></i>Teslimat Adresi
+                            </h6>
+                            <div id="checkoutAdresListesi" class="mt-3"></div>
+
+                           
+                            <div class="checkout-adres-form-kutu mt-3">
+                                <p class="checkout-form-alt-baslik"><i class="bi bi-plus-circle me-1 gold-text"></i>Yeni Adres Gir</p>
+                                <div class="row g-2 mt-1">
+                                    <div class="col-md-6">
+                                        <label class="auth-label">İl</label>
+                                        <select class="form-select luxury-select" id="checkoutIl">
+                                            <option value="">İl Seçin</option>
+                                            <option>İstanbul</option><option>Ankara</option><option>İzmir</option>
+                                            <option>Bursa</option><option>Antalya</option><option>Adana</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="auth-label">İlçe</label>
+                                        <input type="text" class="form-control luxury-input" id="checkoutIlce" placeholder="İlçe adı">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="auth-label">Açık Adres</label>
+                                        <textarea class="form-control luxury-input" id="checkoutAcikAdres" rows="2" placeholder="Mahalle, cadde, sokak, kapı no..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-3 pt-3 d-flex gap-2" style="border-top: 1px solid var(--gray-mid);">
+    <button class="btn btn-gold btn-sm" onclick="yeniAdresiKaydet()">
+        <i class="bi bi-check2 me-1"></i>Adresi Kaydet ve Seç
+    </button>
+    <button class="btn btn-outline-secondary btn-sm" onclick="checkoutAdresleriDoldur()">
+        <i class="bi bi-arrow-left me-1"></i>Geri Dön
+    </button>
+</div>
+                            </div>
+                        </div>
+
+                        
+                        <div id="checkoutAdim2" class="checkout-panel p-4" style="display:none;">
+                            <h6 class="checkout-panel-baslik">
+                                <i class="bi bi-credit-card-2-front me-2 gold-text"></i>Ödeme Bilgileri
+                            </h6>
+                            <div id="checkoutOdemeListesi" class="mt-3"></div>
+
+                            
+                            <div id="yeniKartFormu" class="mt-3">
+                                <p class="checkout-form-alt-baslik"><i class="bi bi-credit-card me-1 gold-text"></i>Kart Bilgilerini Girin</p>
+                                <div class="checkout-kart-form">
+                                    <div class="mb-3">
+                                        <label class="auth-label">Kart Üzerindeki Ad</label>
+                                        <input type="text" class="form-control luxury-input" id="kartAd" placeholder="AD SOYAD">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="auth-label">Kart Numarası</label>
+                                        <div class="kart-numara-wrapper">
+                                            <input type="text" class="form-control luxury-input" id="kartNo" placeholder="•••• •••• •••• ••••" maxlength="19">
+                                            <span class="kart-tip-ikonlar">
+                                                <i class="bi bi-credit-card-2-front gold-text"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="auth-label">Son Kullanma Tarihi</label>
+                                            <input type="text" class="form-control luxury-input" id="kartSkt" placeholder="AA / YY" maxlength="5">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="auth-label">CVV / CVC</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control luxury-input" id="kartCvv" placeholder="•••" maxlength="3">
+                                                <span class="input-group-text" style="background:var(--gray-light);border-color:var(--gray-mid);cursor:help;" title="Kartınızın arkasındaki 3 haneli güvenlik kodu">
+                                                    <i class="bi bi-question-circle text-muted" style="font-size:0.8rem;"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkout-ssl-uyari mt-3">
+                                        <i class="bi bi-shield-lock-fill gold-text me-2"></i>
+                                        <span>256-bit SSL ile şifrelenir. Kart bilgileriniz güvende.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <div id="checkoutAdim3" class="checkout-panel" style="display:none;">
+                            <div class="onay-ekrani">
+
+                               
+                                <div class="onay-tik-cerceve">
+                                    <div class="onay-tik-halka onay-tik-halka-dis"></div>
+                                    <div class="onay-tik-halka onay-tik-halka-ort"></div>
+                                    <div class="onay-tik-ic">
+                                        <svg class="onay-tik-svg" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                                            <circle class="onay-tik-cember" cx="26" cy="26" r="25" fill="none"/>
+                                            <path class="onay-tik-isaret" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="onay-baslik-grup">
+                                    <p class="onay-ust-etiket">
+                                        <i class="bi bi-patch-check-fill me-2"></i>PreOwnedSales Onayladı
+                                    </p>
+                                    <h2 class="onay-baslik">Siparişiniz Başarıyla Alındı</h2>
+                                    <p class="onay-alt-mesaj">
+                                        Lüks parçanız titizlikle paketleniyor. Kısa süre içinde kargoya teslim edilecektir.
+                                    </p>
+                                </div>
+
+                               
+                                <div class="onay-detay-kutu">
+                                    <div class="onay-detay-baslik">
+                                        <i class="bi bi-receipt me-2 gold-text"></i>Sipariş Özeti
+                                    </div>
+                                    <div class="onay-detay-satir">
+                                        <span class="onay-detay-etiket">
+                                            <i class="bi bi-hash me-1"></i>Sipariş Numarası
+                                        </span>
+                                        <span class="onay-detay-deger onay-siparis-no">#POS-2026-88192</span>
+                                    </div>
+                                    <div class="onay-detay-satir">
+                                        <span class="onay-detay-etiket">
+                                            <i class="bi bi-truck me-1"></i>Kargo Sağlayıcısı
+                                        </span>
+                                        <span class="onay-detay-deger">Aras Kargo</span>
+                                    </div>
+                                    <div class="onay-detay-satir">
+                                        <span class="onay-detay-etiket">
+                                            <i class="bi bi-calendar3 me-1"></i>Tahmini Teslimat
+                                        </span>
+                                        <span class="onay-detay-deger">2 – 4 İş Günü</span>
+                                    </div>
+                                    <div class="onay-detay-satir">
+                                        <span class="onay-detay-etiket">
+                                            <i class="bi bi-shield-check me-1"></i>Dijital Sertifika
+                                        </span>
+                                        <span class="onay-detay-deger gold-text">
+                                            <i class="bi bi-envelope-check-fill me-1"></i>E-posta ile iletildi
+                                        </span>
+                                    </div>
+                                    <div class="onay-detay-satir onay-detay-satir-son">
+                                        <span class="onay-detay-etiket">
+                                            <i class="bi bi-lock-fill me-1"></i>Ödeme Güvencesi
+                                        </span>
+                                        <span class="onay-detay-deger" style="color:#2e7d32;">
+                                            <i class="bi bi-check-circle-fill me-1"></i>PCI DSS Onaylı
+                                        </span>
+                                    </div>
+                                </div>
+
+                               
+                                <p class="onay-bilgi-notu">
+                                    <i class="bi bi-envelope me-1"></i>
+                                    Sipariş detayları ve kargo takip kodunuz kayıtlı e-posta adresinize gönderildi.
+                                </p>
+
+                               
+                                <button class="btn-siparisleri-gor"
+                                    onclick="(function(){
+                                        var cm = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                                        if (cm) cm.hide();
+                                        setTimeout(function(){
+                                            var sm = new bootstrap.Modal(document.getElementById('siparislerimModal'));
+                                            sm.show();
+                                        }, 350);
+                                    })()">
+                                    <i class="bi bi-bag-check-fill me-2"></i>
+                                    Siparişlerimi Görüntüle
+                                </button>
+
+                               
+                                <div class="onay-imza">
+                                    PreOwned<span class="gold-text">Sales</span>
+                                    <span class="onay-imza-ayirac">·</span>
+                                    Authenticated Luxury Resale
+                                </div>
+
+                            </div>
+                          
+                            <div id="checkoutOzetIcerik" style="display:none;"></div>
+                        </div>
+                    </div>
+                  
+
+                    
+                    <div class="checkout-sag-sidebar">
+                        <div class="checkout-sidebar-ic">
+                            
+                            <div class="checkout-sidebar-baslik">
+                                <i class="bi bi-receipt me-2 gold-text"></i>Sipariş Özeti
+                            </div>
+
+                           
+                            <div class="checkout-sidebar-urunler" id="checkoutSidebarUrunler">
+                                <div class="checkout-sidebar-bos-mesaj text-muted small fst-italic p-2">
+                                    <i class="bi bi-bag me-1"></i>Sepetiniz yüklenecek...
+                                </div>
+                            </div>
+
+                           
+                            <div class="checkout-sidebar-fiyat">
+                                <div class="checkout-sidebar-fiyat-satir">
+                                    <span>Ara Toplam</span>
+                                    <span id="checkoutSidebarAraToplam">—</span>
+                                </div>
+                                <div class="checkout-sidebar-fiyat-satir">
+                                    <span>Kargo</span>
+                                    <span class="gold-text fw-bold">Ücretsiz</span>
+                                </div>
+                                <div class="checkout-sidebar-fiyat-satir checkout-sidebar-toplam-satir">
+                                    <span>Toplam</span>
+                                    <span id="checkoutSidebarToplam">—</span>
+                                </div>
+                            </div>
+
+                           
+                            <div class="checkout-sidebar-guvence">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <i class="bi bi-patch-check-fill gold-text"></i>
+                                    <small class="fw-bold" style="font-size:0.7rem;letter-spacing:0.5px;text-transform:uppercase;">PreOwnedSales Güvencesi</small>
+                                </div>
+                                <ul class="checkout-guvence-liste">
+                                    <li><i class="bi bi-check2 gold-text me-1"></i>Uzman ekspertiz onaylı</li>
+                                    <li><i class="bi bi-check2 gold-text me-1"></i>Dijital orijinallik sertifikası</li>
+                                    <li><i class="bi bi-check2 gold-text me-1"></i>14 gün koşulsuz iade</li>
+                                    <li><i class="bi bi-check2 gold-text me-1"></i>Güvenli 3D Secure ödeme</li>
+                                </ul>
+                            </div>
+
+                            
+                            <button class="btn-siparis-onayla w-100" id="btnCheckoutIleri">
+                                <i class="bi bi-arrow-right-circle-fill me-2"></i>
+                                Ödemeye Geç
+                            </button>
+                            <p class="checkout-sidebar-alt-not">
+                                <i class="bi bi-lock-fill me-1"></i>
+                                Ödemeniz PCI DSS güvencesiyle işlenir
+                            </p>
+                        </div>
+                    </div>
+                    
+
+                </div>
+               
+            </div>
+            <div class="modal-footer luxury-modal-footer" id="checkoutFooter">
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AUTH MODALI -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-person-circle me-2 gold-text"></i>Hesabım
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <ul class="nav nav-tabs auth-tabs mb-4" id="authTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="giris-tab" data-bs-toggle="tab"
+                                data-bs-target="#girisPanel" type="button" role="tab">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Giriş Yap
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="kayit-tab" data-bs-toggle="tab"
+                                data-bs-target="#kayitPanel" type="button" role="tab">
+                            <i class="bi bi-person-plus me-1"></i>Kayıt Ol
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="sifre-tab" data-bs-toggle="tab"
+                                data-bs-target="#sifrePanel" type="button" role="tab">
+                            <i class="bi bi-key me-1"></i>Şifremi Unuttum
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="authTabContent">
+                    <!-- GİRİŞ YAP -->
+                    <div class="tab-pane fade show active" id="girisPanel" role="tabpanel">
+                        <div id="girisMesaj" class="auth-mesaj mb-3" style="display:none;"></div>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="girisEmail">E-posta Adresi</label>
+                            <input type="email" class="form-control luxury-input" id="girisEmail" placeholder="ornek@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="girisSifre">Şifre</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control luxury-input" id="girisSifre" placeholder="••••••••">
+                                <button class="btn btn-outline-secondary btn-sifre-goster" type="button"
+                                        onclick="sifreGosterGizle('girisSifre', this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn btn-gold w-100 py-2 mt-1"
+                                onclick="girisYap(document.getElementById('girisEmail').value, document.getElementById('girisSifre').value)">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                        </button>
+                        <p class="text-center mt-3 mb-0">
+                            <small class="text-muted">Hesabınız yok mu?
+                                <a href="#" class="gold-text text-decoration-none fw-bold"
+                                   onclick="document.getElementById('kayit-tab').click(); return false;">Üye Olun</a>
+                            </small>
+                        </p>
+                    </div>
+                    <!-- KAYIT OL -->
+                    <div class="tab-pane fade" id="kayitPanel" role="tabpanel">
+                        <div id="kayitMesaj" class="auth-mesaj mb-3" style="display:none;"></div>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="kayitAdSoyad">Ad Soyad</label>
+                            <input type="text" class="form-control luxury-input" id="kayitAdSoyad" placeholder="Adınız Soyadınız">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="kayitEmail">E-posta Adresi</label>
+                            <input type="email" class="form-control luxury-input" id="kayitEmail" placeholder="ornek@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="kayitSifre">Şifre</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control luxury-input" id="kayitSifre" placeholder="En az 6 karakter">
+                                <button class="btn btn-outline-secondary btn-sifre-goster" type="button"
+                                        onclick="sifreGosterGizle('kayitSifre', this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check luxury-check">
+                                <input class="form-check-input" type="checkbox" id="kayitKural">
+                                <label class="form-check-label" for="kayitKural" style="font-size:0.82rem;">
+                                    <a href="#" class="gold-text text-decoration-none" data-bs-toggle="modal"
+                                       data-bs-target="#kosullarModal"
+                                       onclick="var m=bootstrap.Modal.getInstance(document.getElementById('authModal')); if(m)m.hide();">
+                                        Kullanım Koşullarını
+                                    </a> ve
+                                    <a href="#" class="gold-text text-decoration-none" data-bs-toggle="modal"
+                                       data-bs-target="#gizlilikModal"
+                                       onclick="var m=bootstrap.Modal.getInstance(document.getElementById('authModal')); if(m)m.hide();">
+                                        Gizlilik Politikasını
+                                    </a> kabul ediyorum.
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn btn-gold w-100 py-2 mt-1"
+                                onclick="kayitOl(document.getElementById('kayitAdSoyad').value, document.getElementById('kayitEmail').value, document.getElementById('kayitSifre').value)">
+                            <i class="bi bi-person-check me-2"></i>Üye Ol
+                        </button>
+                    </div>
+                    <!-- ŞİFREMİ UNUTTUM -->
+                    <div class="tab-pane fade" id="sifrePanel" role="tabpanel">
+                        <div id="sifreMesaj" class="auth-mesaj mb-3" style="display:none;"></div>
+                        <p class="text-muted small mb-3" style="line-height:1.7;">
+                            E-posta adresinizi girin; şifre sıfırlama bağlantısını size ileteceğiz.
+                        </p>
+                        <div class="mb-3">
+                            <label class="form-label auth-label" for="sifreEmail">E-posta Adresi</label>
+                            <input type="email" class="form-control luxury-input" id="sifreEmail" placeholder="ornek@email.com">
+                        </div>
+                        <button class="btn btn-gold w-100 py-2 mt-1"
+                                onclick="sifremiUnuttum(document.getElementById('sifreEmail').value)">
+                            <i class="bi bi-envelope me-2"></i>Sıfırlama Bağlantısını Gönder
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- SİPARİŞLERİM MODALI-->
+<div class="modal fade" id="siparislerimModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-box-seam me-2 gold-text"></i>Siparişlerim
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted small mb-4" style="letter-spacing:0.5px;">Hesabınıza bağlı doğrulanmış alım kayıtları aşağıda listelenmektedir.</p>
+                <div class="luxury-order-table">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr class="luxury-table-head">
+                                <th>Sipariş No</th>
+                                <th>Ürün</th>
+                                <th>Tarih</th>
+                                <th>Tutar</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="luxury-table-row">
+                                <td class="font-mono gold-text">#POS-2025-00143</td>
+                                <td>
+                                    <strong class="d-block" style="font-size:0.84rem;">Louis Vuitton — Neverfull MM</strong>
+                                    <small class="text-muted">Monogram Canvas · Etiketli</small>
+                                </td>
+                                <td>14 Mart 2025</td>
+                                <td class="fw-bold">285.000 ₺</td>
+                                <td><span class="siparis-durum-badge durum-teslim">Teslim Edildi</span></td>
+                            </tr>
+                            <tr class="luxury-table-row">
+                                <td class="font-mono gold-text">#POS-2024-00891</td>
+                                <td>
+                                    <strong class="d-block" style="font-size:0.84rem;">Hermès — Carrée 90 Soie</strong>
+                                    <small class="text-muted">Les Cavaliers d'Or · Etiketli</small>
+                                </td>
+                                <td>28 Eylül 2024</td>
+                                <td class="fw-bold">125.000 ₺</td>
+                                <td><span class="siparis-durum-badge durum-teslim">Teslim Edildi</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- HESAP AYARLARIM MODALI -->
+<div class="modal fade" id="hesapAyarlariModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-person-badge me-2 gold-text"></i>Hesabım
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="dashboard-layout">
+                    <div class="dashboard-sidebar">
+                        <div class="dashboard-kullanici-blok">
+                            <div class="dashboard-avatar"><i class="bi bi-person-fill"></i></div>
+                            <div class="dashboard-kullanici-bilgi">
+                                <p class="dashboard-kullanici-ad" id="dashboardKullaniciAd">—</p>
+                                <span class="dashboard-premium-badge"><i class="bi bi-patch-check-fill me-1"></i>Premium</span>
+                            </div>
+                        </div>
+                        <nav class="dashboard-nav">
+                            <button id="btnTab_profil" class="dashboard-nav-item aktif" onclick="dashboardSekme('profil')">
+                                <i class="bi bi-person"></i><span>Profil Bilgilerim</span>
+                            </button>
+                            <button id="btnTab_siparisler" class="dashboard-nav-item" onclick="dashboardSekme('siparisler')">
+                                <i class="bi bi-box-seam"></i><span>Siparişlerim</span>
+                                <span class="dashboard-nav-badge">2</span>
+                            </button>
+                            <button id="btnTab_odeme_adres" class="dashboard-nav-item" onclick="dashboardSekme('odeme_adres')">
+                                <i class="bi bi-wallet2"></i><span>Ödeme & Adres</span>
+                            </button>
+                            <button id="btnTab_favoriler" class="dashboard-nav-item" onclick="dashboardSekme('favoriler')">
+                                <i class="bi bi-heart"></i><span>Favorilerim</span>
+                                <span class="dashboard-nav-badge" id="dashFavoriBadge">0</span>
+                            </button>
+                            <button id="btnTab_guvenlik" class="dashboard-nav-item" onclick="dashboardSekme('guvenlik')">
+                                <i class="bi bi-shield-lock"></i><span>Güvenlik</span>
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <div class="dashboard-icerik">
+                        <div class="dashboard-panel" id="dashPanel_profil">
+                            <h6 class="dashboard-panel-baslik">Profil Bilgilerim</h6>
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label class="auth-label">Ad Soyad</label>
+                                    <input type="text" class="form-control luxury-input" id="hesapAdSoyad" >
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="auth-label">E-posta Adresi</label>
+                                    <input type="email" class="form-control luxury-input" id="hesapEmail" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="auth-label">Üyelik Tarihi</label>
+                                    <input type="text" class="form-control luxury-input" value="01 Ocak 2024" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="auth-label">Üyelik Tipi</label>
+                                    <input type="text" class="form-control luxury-input" value="PreOwnedSales Premium" readonly>
+                                </div>
+                            </div>
+                            <div class="hesap-uyelik-rozet mt-4">
+                                <i class="bi bi-patch-check-fill gold-text me-2"></i><span>Doğrulanmış Üye — PreOwnedSales Premium</span>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-gold btn-sm px-4"onclick="hesapBilgileriniKaydet()"><i class="bi bi-pencil me-1"></i>Profili Düzenle</button>
+                                
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panel" id="dashPanel_siparisler" style="display:none;">
+                           
+                            <div class="siparis-bolum-baslik aktif-siparis-baslik">
+                                <span class="siparis-bolum-ikon"><i class="bi bi-truck"></i></span>
+                                <h6 class="dashboard-panel-baslik mb-0">Aktif Siparişler</h6>
+                                <span class="siparis-adet-badge">1</span>
+                            </div>
+                            <div class="luxury-order-table mb-4 mt-3">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr class="luxury-table-head">
+                                            <th>Sipariş No</th><th>Ürün</th><th>Tarih</th><th>Durum</th><th>Takip</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="luxury-table-row">
+                                            <td class="font-mono gold-text">#POS-2026-00012</td>
+                                            <td>
+                                                <strong class="d-block" style="font-size:0.84rem;">Chanel — Classic Flap Bag</strong>
+                                                <small class="text-muted">Lambskin · Etiketli</small>
+                                            </td>
+                                            <td><small>10 May 2026</small></td>
+                                            <td><span class="siparis-durum-badge durum-kargo"><i class="bi bi-truck me-1"></i>Kargoda</span></td>
+                                            <td>
+                                                <button class="btn btn-outline-gold btn-sm" style="font-size:0.6rem;padding:2px 8px;">
+                                                    <i class="bi bi-search me-1"></i>Takip Et
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="luxury-table-row">
+                                            <td class="font-mono gold-text">#POS-2026-00031</td>
+                                            <td>
+                                                <strong class="d-block" style="font-size:0.84rem;">Gucci — Ophidia GG</strong>
+                                                <small class="text-muted">GG Supreme Canvas · Az Kullanılmış</small>
+                                            </td>
+                                            <td><small>22 May 2026</small></td>
+                                            <td><span class="siparis-durum-badge durum-hazirlaniyor"><i class="bi bi-hourglass-split me-1"></i>Hazırlanıyor</span></td>
+                                            <td>
+                                                <button class="btn btn-outline-gold btn-sm" style="font-size:0.6rem;padding:2px 8px;" disabled>
+                                                    <i class="bi bi-clock me-1"></i>Beklemede
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- GEÇMİŞ SİPARİŞLER -->
+                            <div class="siparis-bolum-baslik gecmis-siparis-baslik">
+                                <span class="siparis-bolum-ikon"><i class="bi bi-clock-history"></i></span>
+                                <h6 class="dashboard-panel-baslik mb-0">Geçmiş Siparişler</h6>
+                                <span class="siparis-adet-badge siparis-adet-gecmis">2</span>
+                            </div>
+                            <div class="luxury-order-table mt-3">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr class="luxury-table-head">
+                                            <th>Sipariş No</th><th>Ürün</th><th>Tarih</th><th>Tutar</th><th>Durum</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="luxury-table-row">
+                                            <td class="font-mono gold-text">#POS-2025-00143</td>
+                                            <td>
+                                                <strong class="d-block" style="font-size:0.84rem;">Louis Vuitton — Neverfull MM</strong>
+                                                <small class="text-muted">Monogram Canvas · Etiketli</small>
+                                            </td>
+                                            <td><small>14 Mar 2025</small></td>
+                                            <td class="fw-bold">285.000 ₺</td>
+                                            <td><span class="siparis-durum-badge durum-teslim"><i class="bi bi-check-circle me-1"></i>Teslim Edildi</span></td>
+                                        </tr>
+                                        <tr class="luxury-table-row">
+                                            <td class="font-mono gold-text">#POS-2024-00891</td>
+                                            <td>
+                                                <strong class="d-block" style="font-size:0.84rem;">Hermès — Carrée 90 Soie</strong>
+                                                <small class="text-muted">Les Cavaliers d'Or · Etiketli</small>
+                                            </td>
+                                            <td><small>28 Eyl 2024</small></td>
+                                            <td class="fw-bold">125.000 ₺</td>
+                                            <td><span class="siparis-durum-badge durum-teslim"><i class="bi bi-check-circle me-1"></i>Teslim Edildi</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panel" id="dashPanel_odeme_adres" style="display:none;">
+                            <h6 class="dashboard-panel-baslik">Ödeme &amp; Adres Bilgilerim</h6>
+                            <div class="row g-4 mt-1">
+                                <!-- KAYITLI ADRESLER -->
+                                <div class="col-md-6">
+                                    <p class="dash-bolum-baslik"><i class="bi bi-geo-alt me-1 gold-text"></i>KAYITLI ADRESLER</p>
+                                    <div class="adres-kart varsayilan-adres mb-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <p class="adres-kart-isim mb-1">Ev Adresim</p>
+                                            <span class="adres-varsayilan-badge">Varsayılan</span>
+                                        </div>
+                                        <p class="adres-kart-metin mb-2">Altunizade Mah. Kısıklı Cad. No:14<br>Üsküdar / İstanbul</p>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-outline-gold btn-sm" style="font-size:0.6rem;padding:2px 8px;"><i class="bi bi-pencil me-1"></i>Düzenle</button>
+                                            <button class="btn btn-sm" style="font-size:0.6rem;padding:2px 8px;border:1px solid #ef9a9a;color:#c62828;background:transparent;"><i class="bi bi-trash me-1"></i>Sil</button>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-gold btn-sm w-100"><i class="bi bi-plus me-1"></i>Yeni Adres Ekle</button>
+                                </div>
+
+                                <!-- KAYITLI KARTLAR — Kredi Kartı Görünümü -->
+                                <div class="col-md-6">
+                                    <p class="dash-bolum-baslik"><i class="bi bi-credit-card me-1 gold-text"></i>KAYITLI KARTLAR</p>
+
+                                    
+                                    <div class="kredi-karti-3d mb-3">
+                                        <div class="kredi-karti-on">
+                                            <div class="kredi-karti-bg-efekt"></div>
+                                            <div class="kredi-karti-ust">
+                                                <span class="kredi-karti-marka-adi">PreOwned<span style="color:var(--gold);">Sales</span></span>
+                                                <div class="kredi-karti-chip">
+                                                    <div class="chip-satir"></div>
+                                                    <div class="chip-satir"></div>
+                                                    <div class="chip-satir"></div>
+                                                </div>
+                                            </div>
+                                            <div class="kredi-karti-numara">•••• &nbsp;&nbsp;•••• &nbsp;&nbsp;•••• &nbsp;&nbsp;4242</div>
+                                            <div class="kredi-karti-alt">
+                                                <div>
+                                                    <div class="kredi-karti-etiket">KART SAHİBİ</div>
+                                                    <div class="kredi-karti-deger" id="dashKartSahibi">— — — —</div>
+                                                </div>
+                                                <div>
+                                                    <div class="kredi-karti-etiket">GEÇERLİLİK</div>
+                                                    <div class="kredi-karti-deger">12 / 28</div>
+                                                </div>
+                                                <div class="kredi-karti-network">
+                                                    <div class="kredi-karti-network-daire kredi-karti-network-sol"></div>
+                                                    <div class="kredi-karti-network-daire kredi-karti-network-sag"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-2 mb-3">
+                                        <span class="checkout-ssl-uyari flex-grow-1 py-2 px-3" style="font-size:0.72rem;">
+                                            <i class="bi bi-shield-check gold-text me-1"></i>PCI DSS uyumlu, SSL güvenceli
+                                        </span>
+                                    </div>
+                                    <button class="btn btn-outline-gold btn-sm w-100"><i class="bi bi-plus me-1"></i>Yeni Kart Ekle</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-panel" id="dashPanel_favoriler" style="display:none;">
+                            <h6 class="dashboard-panel-baslik">Favorilerim</h6>
+                            <p class="text-muted mt-3"><i class="bi bi-info-circle me-1"></i>Henüz favoriye eklenmiş bir ürününüz bulunmuyor.</p>
+                        </div>
+
+                        <div class="dashboard-panel" id="dashPanel_guvenlik" style="display:none;">
+    <h6 class="dashboard-panel-baslik">Güvenlik Ayarları</h6>
+    <div class="guvenlik-blok mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3" style="border-bottom: 1px solid var(--gray-mid);">
+            <div>
+                <p class="fw-semibold mb-1"><i class="bi bi-shield-lock-fill gold-text me-2"></i>İki Faktörlü Doğrulama (2FA)</p>
+                <small class="text-muted">Hesabınızı SMS veya Authenticator ile koruyun.</small>
+            </div>
+            <div class="form-check form-switch fs-4">
+                <input class="form-check-input" type="checkbox" checked style="border-color: var(--gold); background-color: var(--gold); cursor: pointer;">
+            </div>
+        </div>
+        <p class="fw-semibold"><i class="bi bi-key gold-text me-2"></i>Şifre Değiştir</p>
+        <div class="mb-2"><input type="password" class="form-control luxury-input" placeholder="Mevcut Şifre"></div>
+        <div class="mb-2"><input type="password" class="form-control luxury-input" placeholder="Yeni Şifre"></div>
+        <button class="btn btn-gold btn-sm mt-2 px-4">Şifreyi Güncelle</button>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ÖDEME YÖNTEMLERİ MODALI -->
+<div class="modal fade" id="odemeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-credit-card-2-front me-2 gold-text"></i>Ödeme Yöntemlerim
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="odeme-kart-kutu">
+                    <div class="odeme-kart-logo">
+                        <i class="bi bi-credit-card-2-front" style="font-size:1.4rem; color:var(--gold);"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 fw-semibold" style="font-size:0.9rem;">•••• •••• •••• 4242</p>
+                        <small class="text-muted">Mastercard &nbsp;·&nbsp; Son Kullanma: 12/28</small>
+                    </div>
+                    <span class="odeme-varsayilan-badge">Varsayılan</span>
+                </div>
+                <p class="text-muted small mt-3" style="line-height:1.7;">
+                    Kart bilgileriniz 256-bit SSL şifreleme ile güvence altındadır. PCI DSS Level 1 uyumlu altyapı kullanılmaktadır.
+                </p>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DİJİTAL SERTİFİKALARIM MODALI -->
+<div class="modal fade" id="sertifikalarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-patch-check me-2 gold-text"></i>Dijital Sertifikalarım
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted small mb-4" style="letter-spacing:0.5px;">Satın aldığınız ürünlere ait kriptografik orijinallik sertifikaları.</p>
+                <div class="sertifika-kart mb-3">
+                    <div class="sertifika-kart-ust">
+                        <div>
+                            <span class="sertifika-label">ÜRÜN</span>
+                            <strong class="d-block mt-1">Louis Vuitton — Neverfull MM Monogram Canvas</strong>
+                        </div>
+                        <i class="bi bi-patch-check-fill" style="font-size:2rem; color:var(--gold); flex-shrink:0;"></i>
+                    </div>
+                    <div class="sertifika-detaylar">
+                        <div><span>Sipariş No</span><span>#POS-2025-00143</span></div>
+                        <div><span>İşlem Tarihi</span><span>14 Mart 2025</span></div>
+                        <div><span>Ekspertiz Skoru</span><span class="gold-text fw-bold">98 / 100</span></div>
+                        <div><span>Sertifika No</span><span class="font-mono" style="font-size:0.78rem;">LUX-CERT-7A3F91B2E4</span></div>
+                    </div>
+                    <div class="sertifika-onay-metni">
+                        <i class="bi bi-shield-check me-1 gold-text"></i>
+                        Bu sertifika PreOwnedSales kriptografik altyapısıyla imzalanmış ve doğrulanmıştır.
+                    </div>
+                </div>
+                <div class="sertifika-kart">
+                    <div class="sertifika-kart-ust">
+                        <div>
+                            <span class="sertifika-label">ÜRÜN</span>
+                            <strong class="d-block mt-1">Hermès — Carrée 90 Soie (Les Cavaliers d'Or)</strong>
+                        </div>
+                        <i class="bi bi-patch-check-fill" style="font-size:2rem; color:var(--gold); flex-shrink:0;"></i>
+                    </div>
+                    <div class="sertifika-detaylar">
+                        <div><span>Sipariş No</span><span>#POS-2024-00891</span></div>
+                        <div><span>İşlem Tarihi</span><span>28 Eylül 2024</span></div>
+                        <div><span>Ekspertiz Skoru</span><span class="gold-text fw-bold">99 / 100</span></div>
+                        <div><span>Sertifika No</span><span class="font-mono" style="font-size:0.78rem;">LUX-CERT-2C8D45F0A1</span></div>
+                    </div>
+                    <div class="sertifika-onay-metni">
+                        <i class="bi bi-shield-check me-1 gold-text"></i>
+                        Bu sertifika PreOwnedSales kriptografik altyapısıyla imzalanmış ve doğrulanmıştır.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--KULLANIM KOŞULLARI MODALI -->
+<div class="modal fade" id="kosullarModal" tabindex="-1" aria-labelledby="kosullarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-file-text me-2 gold-text"></i>Kullanım Koşulları
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4" style="font-size:0.87rem; line-height:1.75; color:#333;">
+                <p class="text-muted" style="font-size:0.75rem; letter-spacing:1px;">Son Güncelleme: 01 Ocak 2026</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">1. Genel Hükümler</h6>
+                <p>PreOwnedSales platformuna ("Platform") erişim sağlayan ve hizmetlerimizden yararlanan tüm kullanıcılar ("Üye"), işbu Kullanım Koşulları'nı ("Koşullar") peşinen kabul etmiş sayılır. PreOwnedSales Teknoloji A.Ş. ("Şirket"), Koşullar'ı önceden haber vermeksizin değiştirme hakkını saklı tutar.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">2. Üyelik ve Hesap Güvenliği</h6>
+                <p>Platforma üye olmak için 18 yaşını doldurmuş olmak zorunludur. Üye, kayıt sırasında girdiği bilgilerin doğruluğundan ve güncelliğinden şahsen sorumludur.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">3. Ekspertiz ve Orijinallik Garantisi</h6>
+                <p>Platformumuzda listelenen tüm ürünler, sertifikalı ekspertiz uzmanları tarafından fiziksel ve dijital incelemeden geçirilmektedir. Sahte olduğu tespit edilen ürünler için tam iade politikası uygulanır.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">4. Satın Alma ve İade Politikası</h6>
+                <p>Siparişler, ödemenin onaylanmasının ardından en geç 5 (beş) iş günü içinde kargo teslimata verilir. Ürün, teslim tarihinden itibaren 14 gün içinde iade edilebilir.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">5. Fikri Mülkiyet</h6>
+                <p>Platform üzerindeki tüm içerikler PreOwnedSales Teknoloji A.Ş.'ye aittir ve Fikir ve Sanat Eserleri Kanunu kapsamında koruma altındadır.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">6. Uyuşmazlık Çözümü</h6>
+                <p>İşbu Koşullar'dan doğabilecek uyuşmazlıklarda Türkiye Cumhuriyeti Hukuku uygulanır ve Türkiye Cumhuriyeti Mahkemeleri ile İcra Daireleri yetkilidir.</p>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal"
+                    onclick="if(document.getElementById('kayit-tab').classList.contains('active')) { new bootstrap.Modal(document.getElementById('authModal')).show(); }">
+                    <i class="bi bi-check-circle me-1"></i>Okudum, Onaylıyorum
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- GİZLİLİK POLİTİKASI MODALI -->
+<div class="modal fade" id="gizlilikModal" tabindex="-1" aria-labelledby="gizlilikModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-shield-lock me-2 gold-text"></i>Gizlilik Politikası
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4" style="font-size:0.87rem; line-height:1.75; color:#333;">
+                <p class="text-muted" style="font-size:0.75rem; letter-spacing:1px;">Son Güncelleme: 01 Ocak 2026 — KVKK Uyumlu</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">1. Veri Sorumlusu</h6>
+                <p>6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında veri sorumlusu sıfatını taşıyan PreOwnedSales Teknoloji A.Ş., kişisel verilerinizi aşağıda açıklanan amaçlar ve hukuki dayanaklarla işlemektedir.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">2. Toplanan Kişisel Veriler</h6>
+                <p>Platform kullanımı sırasında ad-soyad, e-posta adresi, telefon numarası, teslimat adresi, ödeme bilgileri ve IP adresi toplanmaktadır.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">3. İşleme Amaçları</h6>
+                <p>Kişisel verileriniz; üyelik hesabınızın yönetimi, sipariş işlemleri, kargo takibi ve yasal yükümlülüklerin yerine getirilmesi amacıyla KVKK'nın 5. maddesi kapsamında işlenmektedir.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">4. KVKK Kapsamındaki Haklarınız</h6>
+                <p>KVKK'nın 11. maddesi uyarınca kişisel verilerinizle ilgili tüm haklarınızı kullanmak için <strong class="gold-text">kvkk@preownedsales.com</strong> adresine başvurabilirsiniz.</p>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal"
+                    onclick="if(document.getElementById('kayit-tab').classList.contains('active')) { new bootstrap.Modal(document.getElementById('authModal')).show(); }">
+                    <i class="bi bi-check-circle me-1"></i>Okudum, Onaylıyorum
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- KVKK AYDINLATMA METNİ MODALI -->
+<div class="modal fade" id="kvkkModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-file-earmark-lock2 me-2 gold-text"></i>KVKK Aydınlatma Metni
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4" style="font-size:0.87rem; line-height:1.75; color:#333;">
+                <p class="text-muted" style="font-size:0.75rem; letter-spacing:1px;">6698 Sayılı KVKK Madde 10 Kapsamında Aydınlatma — Yürürlük: 01 Ocak 2026</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">Veri Sorumlusu Kimliği</h6>
+                <p>PreOwnedSales Teknoloji A.Ş. (Merkez: Nişantaşı, İstanbul) 6698 sayılı Kişisel Verilerin Korunması Kanunu uyarınca veri sorumlusu sıfatını haiz olup Sicil No: 0534789 ile Kişisel Verileri Koruma Kurumu sicilinde kayıtlıdır.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">İşlenen Kişisel Veri Kategorileri</h6>
+                <p><strong>Kimlik Verisi:</strong> Ad-soyad, T.C. Kimlik No (fatura düzenleme amacıyla). <strong>İletişim Verisi:</strong> E-posta, telefon numarası, teslimat adresi. <strong>Finansal Veri:</strong> Kart son dört hanesi, IBAN (iade işlemleri). <strong>İşlem Güvenliği Verisi:</strong> IP adresi, oturum bilgisi, çerez verileri.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">Aktarım ve Saklama</h6>
+                <p>Verileriniz; kargo iş ortakları, ödeme altyapısı sağlayıcıları ile yetkili kamu kurumlarına aktarılabilir. Saklama süresi üyelik sözleşmesinin sona ermesinden itibaren 10 yıldır.</p>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  ÇEREZ POLİTİKASI MODALI -->
+<div class="modal fade" id="cerezModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content luxury-modal">
+            <div class="modal-header luxury-modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-cookie me-2 gold-text"></i>Çerez Politikası
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body p-4" style="font-size:0.87rem; line-height:1.75; color:#333;">
+                <p class="text-muted" style="font-size:0.75rem; letter-spacing:1px;">Yürürlük: 01 Ocak 2026</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">Zorunlu Çerezler</h6>
+                <p>Oturum yönetimi ve güvenlik doğrulaması için kullanılır. Bu çerezler platformun çalışması için zorunlu olup devre dışı bırakılamaz.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">Tercih Çerezleri</h6>
+                <p>Dil, para birimi ve arama filtreleri gibi kullanıcı tercihlerini hatırlamak için kullanılır. Saklama süresi: 12 ay.</p>
+                <h6 class="gold-text" style="letter-spacing:1px; font-size:0.78rem; text-transform:uppercase;">Analitik Çerezler</h6>
+                <p>Platform performansını ve kullanıcı deneyimini iyileştirmek için anonim trafik verisi toplanır. Google Analytics 4 kullanılmaktadır.</p>
+            </div>
+            <div class="modal-footer luxury-modal-footer">
+                <button type="button" class="btn btn-gold btn-sm px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="script.js"></script>
+
+<!-- CHECKOUT SIDEBAR: Sepet Verilerini Yansıt (script.js'e bağlı-->
+<script>
+(function() {
+    
+    var checkoutModalEl = document.getElementById('checkoutModal');
+    if (!checkoutModalEl) return;
+
+    checkoutModalEl.addEventListener('show.bs.modal', function() {
+        setTimeout(function() {
+            
+            if (typeof sepet === 'undefined') return;
+
+            var urunlerDiv = document.getElementById('checkoutSidebarUrunler');
+            var araTotalEl = document.getElementById('checkoutSidebarAraToplam');
+            var totalEl    = document.getElementById('checkoutSidebarToplam');
+
+            if (!urunlerDiv) return;
+
+            if (sepet.length === 0) {
+                urunlerDiv.innerHTML = '<div class="checkout-sidebar-bos-mesaj text-muted small fst-italic p-2"><i class="bi bi-bag me-1"></i>Sepetiniz boş.</div>';
+                if (araTotalEl) araTotalEl.textContent = '—';
+                if (totalEl) totalEl.textContent = '—';
+                return;
+            }
+
+            var html = '';
+            var toplam = 0;
+            for (var i = 0; i < sepet.length; i++) {
+                var item = sepet[i];
+                toplam += item.price;
+                html += '<div class="checkout-sidebar-urun-satir">';
+                html += '<img src="' + (item.image || '') + '" class="checkout-sidebar-urun-img" alt="' + (item.name || '') + '">';
+                html += '<div class="checkout-sidebar-urun-bilgi">';
+                html += '<div class="sidebar-urun-marka">' + (item.brand || '') + '</div>';
+                html += '<div class="sidebar-urun-isim">' + (item.name || '') + '</div>';
+                html += '</div>';
+                html += '<div class="checkout-sidebar-urun-fiyat">' + item.price.toLocaleString('tr-TR') + ' ₺</div>';
+                html += '</div>';
+            }
+            urunlerDiv.innerHTML = html;
+
+            var toplamStr = toplam.toLocaleString('tr-TR') + ' ₺';
+            if (araTotalEl) araTotalEl.textContent = toplamStr;
+            if (totalEl) totalEl.textContent = toplamStr;
+        }, 50);
+    });
+})();
+
+    
+    window.addEventListener('load', function() {
+        if(typeof navbarGuncelle === 'function') navbarGuncelle();
+    });
+
+</script>
+</body>
+</html>
